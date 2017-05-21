@@ -183,11 +183,7 @@ extension ViewController : ConnectionManagerDelegate {
     
     func connectedDevicesChanged(manager: ConnectionManager, connectedDevices: [String]) {
         OperationQueue.main.addOperation {
-            if (connectedDevices.count + 1 < 1){
-                self.ConnectionDisplay.text = "Chat room: \(roomname), Members: \(connectedDevices.count + 1)"
-            } else {
-                self.ConnectionDisplay.text = "Chat room: \(roomname), Members: Just you"
-            }
+            self.ConnectionDisplay.text = "Chat room: \(roomname), Members: \(connectedDevices.count + 1)"
         }
     }
     
@@ -198,43 +194,68 @@ extension ViewController : ConnectionManagerDelegate {
                 inputarray.append(element)
             }
             if (inputarray.count == 2){
-                switch inputarray[0]{
-                case "0":
-                    self.view.backgroundColor = UIColor.red
-                    self.MessageView.backgroundColor = UIColor.red
-                case "1":
-                    self.view.backgroundColor = UIColor.yellow
-                    self.MessageView.backgroundColor = UIColor.yellow
-                case "2":
-                    self.view.backgroundColor = UIColor.black
-                    self.MessageView.backgroundColor = UIColor.black
-                case "3":
-                    self.view.backgroundColor = UIColor.white
-                    self.MessageView.backgroundColor = UIColor.white
-                case "4":
-                    self.view.backgroundColor = UIColor.blue
-                    self.MessageView.backgroundColor = UIColor.blue
-                case "5":
-                    self.view.backgroundColor = UIColor.green
-                    self.MessageView.backgroundColor = UIColor.green
-                default: break
-                }
+                let winalert = UIAlertController(title: "Color scheme recieved", message: "Someone has sent you a color scheme", preferredStyle: UIAlertControllerStyle.alert)
+                winalert.addAction(UIAlertAction(title: "Accept", style: .default, handler: { (action: UIAlertAction!) in
+                    switch inputarray[0]{
+                    case "0":
+                        self.view.backgroundColor = UIColor.red
+                        self.MessageView.backgroundColor = UIColor.red
+                        ColourScheme[0] = "0"
+                    case "1":
+                        self.view.backgroundColor = UIColor.yellow
+                        self.MessageView.backgroundColor = UIColor.yellow
+                        ColourScheme[0] = "1"
+                    case "2":
+                        self.view.backgroundColor = UIColor.black
+                        self.MessageView.backgroundColor = UIColor.black
+                        ColourScheme[0] = "2"
+                    case "3":
+                        self.view.backgroundColor = UIColor.white
+                        self.MessageView.backgroundColor = UIColor.white
+                        ColourScheme[0] = "3"
+                    case "4":
+                        self.view.backgroundColor = UIColor.blue
+                        self.MessageView.backgroundColor = UIColor.blue
+                        ColourScheme[0] = "4"
+                    case "5":
+                        self.view.backgroundColor = UIColor.green
+                        self.MessageView.backgroundColor = UIColor.green
+                        ColourScheme[0] = "5"
+                    default: break
+                    }
+                    
+                    switch inputarray[1]{
+                    case "0":
+                        self.MessageView.textColor = UIColor.red
+                        self.ConnectionDisplay.textColor = UIColor.red
+                        ColourScheme[1] = "0"
+                    case "1":
+                        self.MessageView.textColor = UIColor.yellow
+                        self.ConnectionDisplay.textColor = UIColor.yellow
+                        ColourScheme[1] = "1"
+                    case "2":
+                        self.MessageView.textColor = UIColor.black
+                        self.ConnectionDisplay.textColor = UIColor.black
+                        ColourScheme[1] = "2"
+                    case "3":
+                        self.MessageView.textColor = UIColor.white
+                        self.ConnectionDisplay.textColor = UIColor.white
+                        ColourScheme[1] = "3"
+                    case "4":
+                        self.MessageView.textColor = UIColor.blue
+                        self.ConnectionDisplay.textColor = UIColor.blue
+                        ColourScheme[1] = "4"
+                    case "5":
+                        self.MessageView.textColor = UIColor.green
+                        self.ConnectionDisplay.textColor = UIColor.green
+                        ColourScheme[1] = "5"
+                    default: break
+                    }
+                }))
+                winalert.addAction(UIAlertAction(title: "Deny", style: .default, handler: nil))
+                self.present(winalert, animated: true, completion: nil)
                 
-                switch inputarray[1]{
-                case "0":
-                    self.MessageView.textColor = UIColor.red
-                case "1":
-                    self.MessageView.textColor = UIColor.yellow
-                case "2":
-                    self.MessageView.textColor = UIColor.black
-                case "3":
-                    self.MessageView.textColor = UIColor.white
-                case "4":
-                    self.MessageView.textColor = UIColor.blue
-                case "5":
-                    self.MessageView.textColor = UIColor.green
-                default: break
-                }
+                
             } else{
                 self.MessageView.text = self.MessageView.text + "\t" + self.decrypt(input: messagestring) + "\n"
                 let strlen:Int = self.MessageView.text.characters.count
